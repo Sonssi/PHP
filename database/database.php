@@ -1,26 +1,28 @@
 <?php
 
+require_once "libraries/Helpers.php";
+
 function connectDB(){
     try{
-        $pdo= new PDO('mysql:host = 127.0.0.1;dbname='); //kesken
-        $pdo-> setAtribute(PDO::ATTR_ERRMODE, PDO::)//kesken
-        //echo "Tietokantayhteys ok";
+        $pdo= new PDO('mysql:host = 127.0.0.1;dbname=news', 'root', 'mypass123');
+        $pdo-> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        echo "Tietokantayhteys ok";
         return $pdo;
     }catch (PDOexeption $e){
-        echo "Virhe tietokantayhteydessä: " . $e->ge; //kesken
+        echo "Virhe tietokantayhteydessä: " . $e->getMessage();
         die();
     }
     }
-}
+
 
 function getAllNews($pdo){
-    $statement = $pdo->prepare('select * from uutinen') //kesken
+    $statement = $pdo->prepare('select * from uutinen');
     $statement -> execute();
     $allnews = $statement ->fetchAll();
     return $allnews;
 }
 
-function insertInto[$pdo, $table, array $data){
+function insertInto($pdo, $table, array $data){
     $columns = array_keys($data);
     $columns_string = implode(', ', $columns);
     $placeholder = implode(', ', array_fill(1, count($data), '?'));
@@ -28,7 +30,7 @@ function insertInto[$pdo, $table, array $data){
     $statement = $pdo->prepare($sql);
     $values = arrays_values($data);
     $cleaneddata = array_map('cleanUp', $values);
-    statement->execute($cleaneddata);
+    $statement->execute($cleaneddata);
 
     if($statement != FALSE) {
         echo "insert onnistui";
@@ -38,7 +40,7 @@ function insertInto[$pdo, $table, array $data){
 
 }
 
-function login($pdo, $data)&
+function login($pdo, $data){
     $cleanusername = cleanUp($data["username"]);
     $statement = $pdo -> prepare ("select pasword from users where username = ?");
     $statement = $pdo-> execute([$cleanusername]);
@@ -48,7 +50,7 @@ function login($pdo, $data)&
         $result = password_verify($data["password"], $hashedpasword["password"]);
         return $result;
     } else {
-        echo "Tarkista tiedot";
+       // echo "Tarkista tiedot";
         return false;
     }
 }

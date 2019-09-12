@@ -19,8 +19,6 @@
         <li><a class = "navbutton" href="index.php">Pääsivu</a></li> <br>
         <li><a class = "navbutton" href="uutiset.php">Lue uutiset</a></li> <br>
         <li><a class = "navbutton" href="uusi_uutinen.php">Lisää uutinen</a></li> <br>
-        <li><a class = "navbutton" href="uusi_uutinen.php">rekisteröinti</a></li> <br>
+        <li><a class = "navbutton" href="register.php">Rekisteröidy</a></li> <br>
     </ul>
 </nav>
-</body>
-</html>
